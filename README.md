@@ -52,6 +52,8 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 调试日志：`adb logcat -s OplusBandBridge`，或应用内「帮助 → 发送调试日志」。
 
+打 tag（`{versionCode}-{versionName}`，如 `251-2.0.9`）会触发 GitHub Actions 构建并发布 Release；需要先配好签名与 PAT 的 Secrets，见 `.github/workflows/release.yml`。
+
 ## 鸣谢
 
 - [MiaM1ku/Miband-OPlusBridge](https://github.com/MiaM1ku/Miband-OPlusBridge)：本项目的上游。
