@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Recommended LSPosed scope. The bridge hosts the device card and health
+         hooks here; clock and weather are read-only integrations. -->
+    <string-array name="xposedscope">
+        <item>com.heytap.mydevices</item>
+        <item>com.mi.health</item>
+        <item>com.coloros.alarmclock</item>
+        <item>com.oneplus.deskclock</item>
+        <item>net.oneplus.weather</item>
+        <item>com.coloros.weather.service</item>
+    </string-array>
+</resources>

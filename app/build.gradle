@@ -4,15 +4,15 @@ plugins {
 }
 
 android {
-    namespace 'io.github.miam1ku.mibandoplusbridge'
-    compileSdk 36
-    buildToolsVersion '35.0.0'
+    namespace 'io.github.kylemourn.mibandoplusbridge'
+    compileSdk 37
+    buildToolsVersion '36.0.0'
     defaultConfig {
-        applicationId 'io.github.miam1ku.mibandoplusbridge'
+        applicationId 'io.github.kylemourn.mibandoplusbridge.independent'
         minSdk 36
         targetSdk 36
-        versionCode 127
-        versionName '1.9.1'
+        versionCode 209
+        versionName '2.0.9-independent'
         // LSPosed auto hot reload only fires when the installed versionCode changes.
         // For a dev loop: ./gradlew :app:assembleDebug -PhotReloadVersionCode=<higher number>
         if (project.hasProperty('hotReloadVersionCode')) {
@@ -37,7 +37,8 @@ android {
     }
     buildTypes {
         debug {
-            signingConfig keyPath != null ? signingConfigs.projectKey : null
+            // A local debug build signs with the standard debug keystore so it can be installed.
+            signingConfig keyPath != null ? signingConfigs.projectKey : signingConfigs.debug
         }
         release {
             signingConfig keyPath != null ? signingConfigs.projectKey : null
@@ -49,6 +50,7 @@ android {
 tasks.configureEach {
     if (name == 'packageDebug' || name == 'packageRelease') {
         doFirst {
+            if (!System.getenv('OPLUSBAND_KEYSTORE')) return
             ['OPLUSBAND_KEYSTORE', 'OPLUSBAND_STORE_PASSWORD', 'OPLUSBAND_KEY_ALIAS',
              'OPLUSBAND_KEY_PASSWORD'].each {
                 if (!System.getenv(it)) throw new GradleException("Missing signing environment: ${it}")

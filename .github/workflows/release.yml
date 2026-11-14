@@ -82,7 +82,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          repository: Xposed-Modules-Repo/io.github.miam1ku.mibandoplusbridge
+          repository: Xposed-Modules-Repo/io.github.kylemourn.mibandoplusbridge
           token: ${{ secrets.XPOSED_REPO_PAT }}
           tag_name: ${{ github.ref_name }}
           target_commitish: main

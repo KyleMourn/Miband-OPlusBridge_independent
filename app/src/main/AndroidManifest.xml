@@ -1,10 +1,11 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <permission android:name="io.github.miam1ku.mibandoplusbridge.permission.FIND_PHONE"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:forceQueryable="true">
+    <permission android:name="${applicationId}.permission.FIND_PHONE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="io.github.miam1ku.mibandoplusbridge.permission.FIND_PHONE" />
-    <permission android:name="io.github.miam1ku.mibandoplusbridge.permission.SET_DND"
+    <uses-permission android:name="${applicationId}.permission.FIND_PHONE" />
+    <permission android:name="${applicationId}.permission.SET_DND"
         android:protectionLevel="signature" />
-    <uses-permission android:name="io.github.miam1ku.mibandoplusbridge.permission.SET_DND" />
+    <uses-permission android:name="${applicationId}.permission.SET_DND" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
@@ -16,26 +17,31 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <queries>
         <package android:name="com.mi.health" />
         <package android:name="com.heytap.mydevices" />
-        <package android:name="com.heytap.health" />
         <package android:name="com.coloros.alarmclock" />
+        <package android:name="com.oneplus.deskclock" />
+        <package android:name="net.oneplus.weather" />
+        <package android:name="com.coloros.weather.service" />
         <package android:name="com.tencent.mobileqq" />
         <intent>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent>
     </queries>
-    <application android:name=".BridgeApplication" android:label="小米手环桥接"
+    <application android:name=".BridgeApplication" android:label="小米手环桥接 independent ver."
         android:description="@string/xposed_description" android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/Theme.OplusBand"
         android:forceQueryable="true"
         android:supportsRtl="true" android:usesCleartextTraffic="false">
+        <meta-data android:name="xposedscope" android:resource="@array/xposedscope" />
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,6 +58,8 @@
         <activity android:name=".LabActivity" android:exported="false" />
 
         <activity android:name=".WeatherActivity" android:exported="false" />
+        <activity android:name=".HealthActivity" android:exported="false" />
+        <activity android:name=".NotificationAppsActivity" android:exported="false" />
         <activity android:name=".integration.BandDetailsActivity" android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
@@ -72,7 +80,7 @@
                 android:value="true" />
         </service>
         <service android:name=".notify.BandNotificationListener" android:exported="false"
-            android:enabled="false"
+            android:enabled="true"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
@@ -86,7 +94,7 @@
             </intent-filter>
         </receiver>
         <provider android:name=".integration.DeviceCardProvider"
-            android:authorities="io.github.miam1ku.mibandoplusbridge.devices"
+            android:authorities="${applicationId}.devices"
             android:exported="true" android:grantUriPermissions="false">
             <intent-filter>
                 <action android:name="oplus.devicecards.action.DEVICE_INFO" />
@@ -94,25 +102,23 @@
             <meta-data android:name="oplus.devicecards.provider" android:resource="@xml/device_center" />
         </provider>
         <provider android:name=".integration.WeatherSnapshotProvider"
-            android:authorities="io.github.miam1ku.mibandoplusbridge.weather"
+            android:authorities="${applicationId}.weather"
             android:exported="true" android:grantUriPermissions="true" />
         <provider android:name=".integration.HealthQueueProvider"
-            android:authorities="io.github.miam1ku.mibandoplusbridge.health"
+            android:authorities="${applicationId}.health"
             android:exported="true" android:directBootAware="false"
             android:grantUriPermissions="false" />
         <provider android:name=".integration.CredentialProvider"
-            android:authorities="io.github.miam1ku.mibandoplusbridge.credentials"
-            android:exported="true" android:directBootAware="false"
-            android:grantUriPermissions="false" />
-        <provider android:name=".integration.HostNotifyProvider"
-            android:authorities="io.github.miam1ku.mibandoplusbridge.notify"
+            android:authorities="${applicationId}.credentials"
             android:exported="true" android:directBootAware="false"
             android:grantUriPermissions="false" />
         <provider android:name=".integration.PhoneAlarmProvider"
-            android:authorities="io.github.miam1ku.mibandoplusbridge.phone-alarm"
+            android:authorities="${applicationId}.phone-alarm"
             android:exported="true" android:grantUriPermissions="false" />
+        <receiver android:name=".integration.ClockRelayReceiver" android:exported="true" />
+        <receiver android:name=".integration.WeatherRelayReceiver" android:exported="true" />
         <provider android:name="androidx.core.content.FileProvider"
-            android:authorities="io.github.miam1ku.mibandoplusbridge.debuglog"
+            android:authorities="${applicationId}.debuglog"
             android:exported="false" android:grantUriPermissions="true">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/debug_log_paths" />
