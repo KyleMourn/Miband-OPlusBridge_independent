@@ -20,6 +20,7 @@ jobs:
       OPLUSBAND_STORE_PASSWORD: ${{ secrets.OPLUSBAND_STORE_PASSWORD }}
       OPLUSBAND_KEY_ALIAS: ${{ secrets.OPLUSBAND_KEY_ALIAS }}
       OPLUSBAND_KEY_PASSWORD: ${{ secrets.OPLUSBAND_KEY_PASSWORD }}
+      HAS_XPOSED_PAT: ${{ secrets.XPOSED_REPO_PAT != '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -81,7 +82,7 @@ jobs:
           gh release view "$GITHUB_REF_NAME" --json body --jq .body > release-notes.md
           echo "name=$(cat release-name.txt)" >> "$GITHUB_OUTPUT"
       - name: Publish Xposed-Modules-Repo release
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/') && env.HAS_XPOSED_PAT == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: Xposed-Modules-Repo/io.github.kylemourn.mibandoplusbridge
