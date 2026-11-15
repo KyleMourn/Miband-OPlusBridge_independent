@@ -58,6 +58,10 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 打 tag（`{versionCode}-{versionName}`，如 `251-2.0.9`）会触发 GitHub Actions 构建并发布 Release；需要先配好签名与 PAT 的 Secrets，见 `.github/workflows/release.yml`。
 
+## 测试环境
+
+构建环境（JDK 21 / SDK 37 / Gradle 8.13）、实测环境（一加 15 + OxygenOS 16 + 欧版时钟 + 手环 10 陶瓷版）、验收清单和日志关键字见 [docs/TESTING.md](docs/TESTING.md)。
+
 ## 鸣谢
 
 - [MiaM1ku/Miband-OPlusBridge](https://github.com/MiaM1ku/Miband-OPlusBridge)：本项目的上游。
