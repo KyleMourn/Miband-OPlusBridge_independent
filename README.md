@@ -9,6 +9,10 @@
 
 包名 `io.github.kylemourn.mibandoplusbridge`（applicationId `…independent`），可与上游原版同时安装，数据互不影响。
 
+## 仓库
+
+https://github.com/KyleMourn/Miband-OPlusBridge_independent
+
 ## 与上游的关系
 
 本项目由 [MiaM1ku/Miband-OPlusBridge](https://github.com/MiaM1ku/Miband-OPlusBridge) 二次开发，许可证同为 AGPL-3.0-or-later。
