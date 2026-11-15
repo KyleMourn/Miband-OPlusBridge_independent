@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - name: Install Android SDK packages
         run: |
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
@@ -33,7 +33,9 @@ jobs:
             SDKMANAGER="$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager"
           fi
           yes | "$SDKMANAGER" --licenses >/dev/null || true
-          "$SDKMANAGER" --install "platforms;android-36" "build-tools;35.0.0"
+          for pkg in "platforms;android-37.0" "platforms;android-37" "build-tools;36.0.0"; do
+            "$SDKMANAGER" --install "$pkg" >/dev/null 2>&1 && echo "installed $pkg" || echo "skipped $pkg"
+          done
       - name: Decode keystore
         run: |
           python3 - <<'PY'
